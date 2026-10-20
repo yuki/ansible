@@ -1,0 +1,9 @@
+---
+- name: Add user to sudoers
+  hosts: linux
+  tasks:
+  - name: Add user ikasle to sudoers
+    ansible.builtin.user:
+      name: ikasle
+      groups: sudo
+      append: true

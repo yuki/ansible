@@ -1,0 +1,12 @@
+---
+- name: Uninstall virtualbox
+  hosts: linux
+  tasks:
+  - name: Remove Virtualbox
+    ansible.builtin.apt:
+      name: virtualbox
+      state: absent
+      purge: true
+        #    ansible.builtin.apt:
+        #name: virtualbox-dkms
+        #state: absent

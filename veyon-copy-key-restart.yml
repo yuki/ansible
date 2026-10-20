@@ -1,0 +1,23 @@
+---
+- name: Copy public key, enable veyon and restart
+  hosts: linux
+  tasks:
+  - name: copy file
+    ansible.builtin.copy:
+      src: ./santurtzi-veyon_public_key.pem
+      dest: /tmp/santurtzi-veyon_public_key.pem
+  - name: veyon import key
+    ansible.builtin.shell:
+      cmd: veyon-cli authkeys import santurtzi-veyon/public /tmp/santurtzi-veyon_public_key.pem
+  - name: veyon change access key group
+    ansible.builtin.shell:
+      cmd: veyon-cli authkeys setaccessgroup santurtzi-veyon/public ikasle
+  - name: veyon change auth method
+    ansible.builtin.shell:
+      cmd: veyon-cli config  set "Authentication/Method" 1
+  - name: enable veyon and restart
+    ansible.builtin.systemd_service:
+      name: veyon
+      daemon_reload: true
+      state: restarted
+      enabled: true

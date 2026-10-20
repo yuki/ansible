@@ -1,0 +1,7 @@
+---
+- name: Install veyon
+  hosts: linux
+  tasks:
+  - name: Install veyon
+    ansible.builtin.apt:
+      name: veyon-service
